@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lumee — Benchmark Harness</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-header no-print">
+      <div class="header-row">
+        <h1>Lumee — Benchmark Harness</h1>
+        <div class="header-actions">
+          <button id="btn-export" class="btn btn-ghost" type="button">Export JSON</button>
+          <button id="btn-import" class="btn btn-ghost" type="button">Import JSON</button>
+          <button id="btn-clear" class="btn btn-danger" type="button">Clear all</button>
+          <button id="btn-print" class="btn btn-primary" type="button">Print results</button>
+        </div>
+      </div>
+      <div class="meta-grid">
+        <label>Tester<input id="meta-tester" type="text" placeholder="your name" /></label>
+        <label>Model / commit<input id="meta-model" type="text" placeholder="e.g. qwen2.5-14b-instruct @ b7d3f4a" /></label>
+        <label>Date<input id="meta-date" type="date" /></label>
+        <label>Prompt language
+          <select id="meta-lang">
+            <option value="de">Deutsch</option>
+            <option value="en">English</option>
+          </select>
+        </label>
+      </div>
+      <div id="progress" class="progress"></div>
+      <button id="btn-hide-header" class="btn-hide-header no-print" type="button">Hide ▲</button>
+    </header>
+
+    <!-- Printed report header (screen-hidden) -->
+    <div class="print-only print-header">
+      <h1>Lumee — Benchmark Results</h1>
+      <div id="print-meta" class="print-meta"></div>
+    </div>
+
+    <button id="header-reveal" class="header-reveal no-print" type="button">Show toolbar ▼</button>
+
+    <section id="intro" class="intro"></section>
+
+    <nav id="outline" class="outline no-print"></nav>
+
+    <main id="sections"></main>
+
+    <section class="results-block">
+      <h2>Results table</h2>
+      <p class="legend"><strong>Captures:</strong> AI = user-facing AI answer; Extr = AI-powered extraction of medical data; AI+Extr = both.</p>
+      <table id="results-table">
+        <thead>
+          <tr><th>#</th><th>Section</th><th>Prompt</th><th>Captures</th><th>Verdict</th><th>Notes</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <input id="import-file" type="file" accept="application/json" hidden />
+
+    <script src="cases.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
