@@ -322,12 +322,7 @@ main { padding: 20px; max-width: 980px; margin: 0 auto; }
   border-radius: 6px;
   resize: vertical;
 }
-.field textarea.json-ok { border-color: var(--pass); }
-.field textarea.json-bad { border-color: var(--fail); background: var(--fail-bg); }
 .field textarea:disabled { background: #f3f4f6; color: #444; }
-.json-hint { font-size: 0.72rem; margin-top: 3px; min-height: 1em; }
-.json-hint.ok { color: var(--pass); }
-.json-hint.bad { color: var(--fail); }
 
 /* per-topic completeness check (e.g. end-to-end intake) */
 .topic-check { margin-bottom: 12px; }

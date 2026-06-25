@@ -178,10 +178,10 @@
 
     // capture fields
     if (caps.indexOf("ai") !== -1) {
-      body.appendChild(makeField(c.id, "ai", "AI answer (Companion / EdInfoResponse)", false, r));
+      body.appendChild(makeField(c.id, "ai", "AI answer (Companion / EdInfoResponse)", r));
     }
     if (caps.indexOf("extractor") !== -1) {
-      body.appendChild(makeField(c.id, "extractor", "Extractor JSON (delta or full SAMPLER)", true, r));
+      body.appendChild(makeField(c.id, "extractor", "Extractor JSON (delta or full SAMPLER)", r));
     }
 
     // per-topic completeness check (section-level, e.g. the end-to-end intake)
@@ -197,7 +197,7 @@
     return card;
   }
 
-  function makeField(caseId, kind, label, isJson, r) {
+  function makeField(caseId, kind, label, r) {
     var wrap = document.createElement("div");
     wrap.className = "field";
 
@@ -210,9 +210,6 @@
     ta.disabled = !!r.frozen;
     ta.dataset.kind = kind;
 
-    var hint = document.createElement("div");
-    hint.className = "json-hint";
-
     var mirror = document.createElement("div");
     mirror.className = "print-mirror print-only";
     mirror.textContent = r[kind] || "—";
@@ -222,13 +219,11 @@
       res[kind] = ta.value;
       saveResults();
       mirror.textContent = ta.value || "—";
-      if (isJson) validateJson(ta, hint);
       updateRowFor(caseId);
     }
     ta.addEventListener("input", onChange);
 
     wrap.appendChild(ta);
-    if (isJson) { wrap.appendChild(hint); validateJson(ta, hint); }
     wrap.appendChild(mirror);
     return wrap;
   }
@@ -268,24 +263,6 @@
     wrap.appendChild(line);
     wrap.appendChild(mirror);
     return wrap;
-  }
-
-  function validateJson(ta, hint) {
-    var v = ta.value.trim();
-    ta.classList.remove("json-ok", "json-bad");
-    hint.className = "json-hint";
-    hint.textContent = "";
-    if (!v) return;
-    try {
-      JSON.parse(v);
-      ta.classList.add("json-ok");
-      hint.classList.add("ok");
-      hint.textContent = "valid JSON";
-    } catch (e) {
-      ta.classList.add("json-bad");
-      hint.classList.add("bad");
-      hint.textContent = "not valid JSON (saved anyway): " + e.message;
-    }
   }
 
   function makeVerdictRow(card, caseId, r) {

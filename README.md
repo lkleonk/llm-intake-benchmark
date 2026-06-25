@@ -68,7 +68,7 @@ accuracy = passed cases / total cases × 100
 The verdict is fundamentally about whether the **extractor** did the right thing; the end-to-end
 section additionally captures the AI answer because follow-up quality matters there. The
 **Extractor JSON** box accepts either the `field_status_updates` delta or the full post-turn
-`sampler_data`, and does live JSON validation (green/red border) — invalid JSON is still saved.
+`sampler_data` as plain text. It does not validate JSON.
 
 ## Files
 
@@ -76,7 +76,7 @@ section additionally captures the AI answer because follow-up quality matters th
 .
 ├── index.html      # page shell: header, section outline, sections container, results table
 ├── styles.css      # styling + the @media print report stylesheet
-├── app.js          # rendering, autosave, copy, verdict/freeze, JSON validation, export/import, print, header toggle
+├── app.js          # rendering, autosave, copy, verdict/freeze, export/import, print, header toggle
 ├── cases.js        # THE DATASET — all SU prompts, expectations, and section config
 ├── README.md
 ├── LICENSE         # MIT
