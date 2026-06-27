@@ -112,15 +112,50 @@ h3 { font-size: 1rem; margin: 0; }
   top: 10px;
   right: 14px;
   z-index: 20;
+  align-items: center;
+  gap: 10px;
+  max-width: calc(100vw - 28px);
   font-size: 0.8rem;
-  padding: 6px 12px;
+  line-height: 1;
+  white-space: nowrap;
+  padding: 7px 11px;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: #fff;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
   cursor: pointer;
 }
-.header-collapsed .header-reveal { display: block; }
+.header-reveal:hover { background: #f6f9ff; border-color: var(--primary); }
+.header-collapsed .header-reveal { display: flex; }
+.header-reveal-metric {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.header-reveal-value {
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 800;
+}
+.header-reveal-label,
+.header-reveal-action { color: var(--muted); }
+.header-reveal-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--line);
+}
+.header-reveal-arrow {
+  color: var(--primary);
+  font-size: 0.78rem;
+  line-height: 1;
+  transform: translateY(-1px);
+}
+.header-reveal:hover .header-reveal-action { color: var(--ink); }
+
+@media (max-width: 420px) {
+  .header-reveal-label { display: none; }
+  .header-reveal { gap: 8px; }
+}
 
 /* ---------- buttons ---------- */
 .btn {

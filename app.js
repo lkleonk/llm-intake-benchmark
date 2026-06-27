@@ -184,7 +184,7 @@
       body.appendChild(makeField(c.id, "extractor", "Extractor JSON (delta or full SAMPLER)", r));
     }
 
-    // per-topic completeness check (section-level, e.g. the end-to-end intake)
+    // per-topic completeness check (section-level, for future multi-turn scenarios)
     if (section.topicCheck) {
       var topicLabel = t(section.topicCheck).replace("{topic}", c.topic ? t(c.topic) : "this topic");
       body.appendChild(makeTopicCheck(c.id, topicLabel, r));
@@ -424,6 +424,24 @@
         '<span class="tag-fail">' + fail + " fail</span> · " +
         '<span class="tag-pending">' + (total - done) + " pending</span>" +
       "</span>";
+
+    var reveal = document.getElementById("header-reveal");
+    if (reveal) {
+      var revealLabel = complete ? "final accuracy" : "accuracy so far";
+      reveal.innerHTML =
+        '<span class="header-reveal-metric">' +
+          '<span class="header-reveal-value">' + pct + "%</span>" +
+          '<span class="header-reveal-label">accuracy</span>' +
+        "</span>" +
+        '<span class="header-reveal-divider" aria-hidden="true"></span>' +
+        '<span class="header-reveal-action">Show toolbar</span>' +
+        '<span class="header-reveal-arrow" aria-hidden="true">▼</span>';
+      reveal.setAttribute(
+        "aria-label",
+        "Show toolbar, " + pct + "% " + revealLabel + ", " + done + " of " + total + " judged"
+      );
+      reveal.title = pct + "% " + revealLabel + " (" + done + "/" + total + " judged)";
+    }
 
     var pm = document.getElementById("print-meta");
     if (pm) {

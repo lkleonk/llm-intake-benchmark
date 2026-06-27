@@ -49,15 +49,9 @@ accuracy = passed cases / total cases × 100
 | # | Section | Chat lifecycle | Captures |
 |---|---|---|---|
 | 1 | Single, unrelated prompts (10) | New chat **before every** prompt | Extractor JSON |
-| 2 | Full end-to-end intake (8 turns) | **One** continuous chat — do **not** reload | AI answer + Extractor |
+| 2 | Questionable info (3) | New chat **before every** prompt | AI answer + Extractor |
 | 3 | ED-info one-liners (3) | **Reload** chat between prompts | AI answer |
-| 4 | Questionable info (4) | New chat **before every** prompt | AI answer + Extractor |
 
-- **Section 2** opens with a *Full intake overview* panel (the target SAMPLER data) and abides by
-  the SAMPLER order (S → A → M → P → L → E → R). Each card also has a **topic-completeness
-  checkbox** — tick it when the AI actually finished gathering the current topic before moving on
-  (it catches the failure mode of advancing too early, e.g. with only half the symptoms). The
-  state is saved and printed; it's an extra observation that does not change the accuracy formula.
 - **Section 3** captures the AI answer (`EdInfoResponse`) — `hospital_info` turns produce no
   SAMPLER change, so there is nothing for the extractor to capture.
 
@@ -65,8 +59,7 @@ accuracy = passed cases / total cases × 100
 
 ## Capture model
 
-The verdict is fundamentally about whether the **extractor** did the right thing; the end-to-end
-section additionally captures the AI answer because follow-up quality matters there. The
+The verdict is fundamentally about whether the captured output did the right thing. The
 **Extractor JSON** box accepts either the `field_status_updates` delta or the full post-turn
 `sampler_data` as plain text. It does not validate JSON.
 
@@ -96,7 +89,7 @@ Everything lives in `cases.js` — no need to touch `app.js`. A section looks li
   title:       { de: "...", en: "..." },
   instruction: { de: "...", en: "..." },
   capture: ["extractor"],              // section default: "extractor" | "ai" | both
-  overviewTitle: { de: "...", en: "..." },   // optional intro panel (used by section 2)
+  overviewTitle: { de: "...", en: "..." },   // optional intro panel
   overview:      { de: ["• ...", ...], en: ["• ...", ...] },
   cases: [
     {
@@ -112,8 +105,8 @@ Everything lives in `cases.js` — no need to touch `app.js`. A section looks li
 - `prompt` and `expected` are bilingual and switch with the language dropdown.
 - `capture` controls which fields a card shows: `"extractor"`, `"ai"`, or both.
 - `topicCheck` (section-level, bilingual) adds a per-card completeness checkbox to every case in
-  that section; `"{topic}"` in the label is replaced with each case's `topic` ({ de, en }). Used
-  by the end-to-end intake to flag whether the AI finished a topic before advancing.
+  that section; `"{topic}"` in the label is replaced with each case's `topic` ({ de, en }). This is
+  available for future multi-turn scenarios.
 - Case `id`s must be **unique and stable** — they are the localStorage keys for saved answers.
   Renaming an `id` orphans its previously recorded data.
 
