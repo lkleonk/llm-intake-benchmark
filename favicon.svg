@@ -9,5 +9,5 @@
   <rect width="64" height="64" rx="14" fill="url(#bg)"/>
   <path d="M18 17h28a8 8 0 0 1 8 8v15a8 8 0 0 1-8 8H34l-10 8v-8h-6a8 8 0 0 1-8-8V25a8 8 0 0 1 8-8Z" fill="#fff"/>
   <path d="M17 20a8 8 0 0 1 6-3h23a8 8 0 0 1 8 8v3c-10 1-23 0-37-8Z" fill="#fdf6d3" opacity=".75"/>
-  <path d="M31 24h8v8h8v8h-8v8h-8v-8h-8v-8h8v-8Z" fill="#2f6df0"/>
+  <path d="M28 21h8v8h8v8h-8v8h-8v-8h-8v-8h8v-8Z" fill="#2f6df0"/>
 </svg>
