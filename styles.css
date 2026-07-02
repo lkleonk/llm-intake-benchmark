@@ -200,7 +200,7 @@ h3 { font-size: 1rem; margin: 0; }
 }
 .outline-links {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 10px;
 }
 .outline-links a {
@@ -213,7 +213,9 @@ h3 { font-size: 1rem; margin: 0; }
   background: #fff;
   text-decoration: none;
   color: var(--ink);
+  grid-column: span 2;
 }
+.outline-links a:nth-child(4):nth-last-child(2) { grid-column: 2 / span 2; }
 .outline-links a:hover { border-color: var(--primary); background: #f6f9ff; }
 .outline-num {
   flex: none;
@@ -233,6 +235,18 @@ h3 { font-size: 1rem; margin: 0; }
   background: #eef1f5;
   padding: 1px 8px;
   border-radius: 999px;
+}
+
+@media (max-width: 760px) {
+  .outline-links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .outline-links a,
+  .outline-links a:nth-child(4):nth-last-child(2) {
+    grid-column: auto / auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .outline-links { grid-template-columns: 1fr; }
 }
 
 /* ---------- sections ---------- */
@@ -313,7 +327,7 @@ main { padding: 20px; max-width: 980px; margin: 0 auto; }
   font-weight: 700;
   margin-bottom: 4px;
 }
-.su-text { font-size: 0.98rem; }
+.su-text { font-size: 0.98rem; white-space: pre-line; }
 .btn-copy {
   position: absolute;
   top: 10px;
@@ -447,14 +461,32 @@ main { padding: 20px; max-width: 980px; margin: 0 auto; }
 }
 
 @media print {
-  body { background: #fff; }
+  body {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+  }
   .no-print { display: none !important; }
   .print-only { display: block; }
-  main, .results-block { max-width: none; padding: 0; }
+  #intro { display: none; }
+  .print-header { order: 1; margin-bottom: 20px; }
+  .results-block {
+    order: 2;
+    max-width: none;
+    padding: 0;
+    margin: 0 0 20px;
+    break-after: page;
+  }
+  #sections {
+    order: 3;
+    max-width: none;
+    padding: 0;
+  }
+  #results-table thead { display: table-header-group; }
+  #results-table tr { break-inside: avoid; }
   .case { break-inside: avoid; box-shadow: none; }
   .field textarea { display: none; }
   .print-mirror { display: block; }
   .verdict-notes, .verdict-btn { display: none; }
-  .print-header { margin-bottom: 20px; }
   .print-meta { font-size: 0.85rem; color: #333; }
 }

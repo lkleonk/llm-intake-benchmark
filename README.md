@@ -51,9 +51,20 @@ accuracy = passed cases / total cases × 100
 | 1 | Single, unrelated prompts (10) | New chat **before every** prompt | Extractor JSON |
 | 2 | Questionable info (3) | New chat **before every** prompt | AI answer + Extractor |
 | 3 | ED-info one-liners (3) | **Reload** chat between prompts | AI answer |
+| 4 | Off-topic / prompt extraction (3) | New chat **before every** prompt | AI answer |
+| 5 | End-to-end conversation (14 turns + final SAMPLER) | **One continuous chat** — no reload/new chat between turns | AI answer per turn; Extractor on the final card |
 
 - **Section 3** captures the AI answer (`EdInfoResponse`) — `hospital_info` turns produce no
   SAMPLER change, so there is nothing for the extractor to capture.
+- **Section 4** (off-topic / prompt extraction) judges only the AI answer — it should refuse to
+  reveal its system prompt and redirect off-topic questions; no SAMPLER change.
+- **Section 5** (end-to-end) runs S → A → M → P → L → E → R in a single chat. Several fields take two
+  turns — a value turn followed by a "nothing more" turn so the list can close: medication (M), and
+  events (E). The PMH (P) step is three turns — the patient names a condition (high blood pressure),
+  the AI drills "since when", then the patient confirms no other conditions. The symptom questions go
+  location → quality → "any other symptoms" (duration is taken from the opening line, so it isn't
+  asked). Each turn captures the AI answer; the final card captures the full post-conversation SAMPLER
+  JSON.
 
 > **Captures legend** — `AI`: user-facing AI answer; `Extr`: AI-powered extraction of medical data; `AI+Extr`: both.
 
